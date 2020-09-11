@@ -2,10 +2,14 @@ import time
 import pytest
 import task_8_5a
 import sys
-sys.path.append('..')
 
-from common_functions import (check_function_exists, check_function_params,
-                              check_attr_or_method)
+sys.path.append("..")
+
+from common_functions import (
+    check_function_exists,
+    check_function_params,
+    check_attr_or_method,
+)
 
 
 # Проверка что тест вызван через pytest ..., а не python ...
@@ -16,8 +20,8 @@ if not isinstance(__loader__, AssertionRewritingHook):
 
 
 def test_func_created():
-    '''Проверяем, что декоратор создан'''
-    check_function_exists(task_8_5a, 'count_calls')
+    """Проверяем, что декоратор создан"""
+    check_function_exists(task_8_5a, "count_calls")
 
 
 def test_attr_total_calls_created():
@@ -25,7 +29,7 @@ def test_attr_total_calls_created():
     def do_thing(a, b):
         return a + b
 
-    check_attr_or_method(do_thing, attr='total_calls')
+    check_attr_or_method(do_thing, attr="total_calls")
 
 
 def test_count_calls_basic():
@@ -48,4 +52,3 @@ def test_count_calls_basic():
         do_thing(2, 3)
 
     assert do_thing.total_calls == 3
-

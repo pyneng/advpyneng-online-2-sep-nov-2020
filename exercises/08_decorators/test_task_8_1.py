@@ -2,7 +2,8 @@ import time
 import pytest
 import task_8_1
 import sys
-sys.path.append('..')
+
+sys.path.append("..")
 
 from common_functions import check_function_exists, check_function_params
 
@@ -13,11 +14,10 @@ if not isinstance(__loader__, AssertionRewritingHook):
     print(f"Тесты нужно вызывать используя такое выражение:\npytest {__file__}\n\n")
 
 
-
 def test_func_created():
-    '''Проверяем, что декоратор и функция send_show_command созданы'''
-    check_function_exists(task_8_1, 'timecode')
-    check_function_exists(task_8_1, 'send_show_command')
+    """Проверяем, что декоратор и функция send_show_command созданы"""
+    check_function_exists(task_8_1, "timecode")
+    check_function_exists(task_8_1, "send_show_command")
 
 
 def test_timecode(capsys):
@@ -31,9 +31,9 @@ def test_timecode(capsys):
     assert return_value == 5
 
     # должно выводиться сообщение со временем выполнения
-    correct_stdout = 'Функция выполнялась'
+    correct_stdout = "Функция выполнялась"
     out, err = capsys.readouterr()
-    seconds = float(out.strip().split(':')[-1])
-    assert out != '', "Сообщение об ошибке не выведено на stdout"
+    seconds = float(out.strip().split(":")[-1])
+    assert out != "", "Сообщение об ошибке не выведено на stdout"
     assert correct_stdout in out, "Выведено неправильное сообщение об ошибке"
     assert 1 < seconds < 4

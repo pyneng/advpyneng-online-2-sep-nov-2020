@@ -2,7 +2,8 @@ import time
 import pytest
 import task_8_6
 import sys
-sys.path.append('..')
+
+sys.path.append("..")
 
 from common_functions import check_function_exists, check_function_params
 
@@ -15,15 +16,17 @@ if not isinstance(__loader__, AssertionRewritingHook):
 
 
 def test_func_created():
-    '''Проверяем, что декоратор создан'''
-    check_function_exists(task_8_6, 'total_order')
+    """Проверяем, что декоратор создан"""
+    check_function_exists(task_8_6, "total_order")
 
 
 def test_total_order_exception():
     with pytest.raises(ValueError) as excinfo:
+
         @task_8_6.total_order
         class DoThing:
             pass
+
 
 def test_total_order_methods():
     @task_8_6.total_order
@@ -54,4 +57,3 @@ def test_total_order_methods():
     assert big_num > small_num
     assert big_num >= small_num
     assert big_num != small_num
-
