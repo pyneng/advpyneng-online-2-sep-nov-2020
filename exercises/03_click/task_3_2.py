@@ -60,8 +60,8 @@ def send_command_to_devices(devices, command, threads):
 
 # Это просто заготовка, чтобы не забыть, что click надо применять к этой функции
 def cli():
-    #devices = yaml.safe_load(yaml_params)
-    #pprint(send_command_to_devices(devices, command, threads), width=120)
+    # devices = yaml.safe_load(yaml_params)
+    # pprint(send_command_to_devices(devices, command, threads), width=120)
     pass
 
 

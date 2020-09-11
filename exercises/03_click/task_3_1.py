@@ -57,6 +57,7 @@ def parse_cdp_to_csv(filenames, output_csv):
                 n_list = parse_sh_cdp_neighbors(f.read())
                 writer.writerows(n_list)
 
+
 # Это просто заготовка, чтобы не забыть, что click надо применять к этой функции
 def cli():
     # parse_cdp_to_csv(cdp_filenames, output_filename)

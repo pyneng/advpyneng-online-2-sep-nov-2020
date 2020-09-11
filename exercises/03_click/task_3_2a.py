@@ -80,7 +80,7 @@ def send_command_to_devices(devices, command, threads=5):
 
 # Это просто заготовка, чтобы не забыть, что click надо применять к этой функции
 def cli():
-    #pprint(send_command_to_devices(devices, command, threads))
+    # pprint(send_command_to_devices(devices, command, threads))
     pass
 
 

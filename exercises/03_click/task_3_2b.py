@@ -56,7 +56,7 @@ from task_3_2 import send_show_command, send_command_to_devices
 
 # Это просто заготовка, чтобы не забыть, что click надо применять к этой функции
 def cli():
-    #pprint(send_command_to_devices(devices, command, threads))
+    # pprint(send_command_to_devices(devices, command, threads))
     pass
 
 

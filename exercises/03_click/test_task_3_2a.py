@@ -61,4 +61,3 @@ def test_cli_input_username(first_router_from_devices_yaml):
     assert (
         result.exit_code == 0
     ), f'CLI не отработал с таким вызовом python task_3_2a.py "sh clock" {ip} -u {username} -p {password}'
-

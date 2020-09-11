@@ -34,7 +34,9 @@ def send_command_to_devices(devices, command, threads=5):
         futures = [
             executor.submit(send_show_command, device, command) for device in devices
         ]
-        with click.progressbar(length=len(futures), label="Connecting to devices") as bar:
+        with click.progressbar(
+            length=len(futures), label="Connecting to devices"
+        ) as bar:
             for future in as_completed(futures):
                 results.append(future.result())
                 bar.update(1)
@@ -43,7 +45,7 @@ def send_command_to_devices(devices, command, threads=5):
 
 # Это просто заготовка, чтобы не забыть, что click надо применять к этой функции
 def cli():
-    #pprint(send_command_to_devices(devices, command, threads))
+    # pprint(send_command_to_devices(devices, command, threads))
     pass
 
 
