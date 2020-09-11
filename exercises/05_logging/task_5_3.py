@@ -129,4 +129,3 @@ if __name__ == "__main__":
     topology = explore_topology(start, ssh_params=common_params)
     pprint(topology, width=120)
     print(tabulate(topology, headers="keys"))
-

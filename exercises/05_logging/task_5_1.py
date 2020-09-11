@@ -104,4 +104,3 @@ if __name__ == "__main__":
     with open("devices_netmiko.yaml") as f:
         devices = yaml.safe_load(f)
     pprint(send_command_to_devices(devices, "sh clock"))
-
