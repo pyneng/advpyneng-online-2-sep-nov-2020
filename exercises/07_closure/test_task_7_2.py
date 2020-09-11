@@ -1,7 +1,8 @@
 import pytest
 import task_7_2
 import sys
-sys.path.append('..')
+
+sys.path.append("..")
 
 from common_functions import check_function_exists, check_function_params
 
@@ -14,8 +15,8 @@ if not isinstance(__loader__, AssertionRewritingHook):
 
 
 def test_func_created():
-    '''Проверяем, что функция создана'''
-    check_function_exists(task_7_2, 'count_total')
+    """Проверяем, что функция создана"""
+    check_function_exists(task_7_2, "count_total")
 
 
 def test_count_total():
@@ -30,4 +31,3 @@ def test_count_total():
     items(32)
     return_value_items = items(33)
     assert return_value_items == 180
-
