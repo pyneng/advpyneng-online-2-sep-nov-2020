@@ -1,8 +1,6 @@
 import pytest
 import task_1_2
 from collections.abc import MutableMapping
-from typing import Dict, Union
-dict_with_str_bool_int = Dict[str, Union[str, bool, int]]
 
 import sys
 
@@ -15,6 +13,7 @@ from common_functions import (
     list_with_str,
     list_of_dicts_with_str,
     dict_with_str_any,
+    dict_with_str_bool_int,
 )
 
 
