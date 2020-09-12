@@ -1,6 +1,7 @@
 import pytest
 import task_1_2
 from collections.abc import MutableMapping
+from typing import List
 
 import sys
 
@@ -65,4 +66,8 @@ def test_send_command_to_devices_params():
     annotations = task_1_2.send_command_to_devices.__annotations__
     assert annotations["command"] == str
     assert annotations["max_workers"] == int
-    assert annotations["devices"] == list_of_dicts_with_str
+    assert (
+        annotations["devices"] == List[dict_with_str]
+        or annotations["devices"] == List[dict_with_str_any]
+        or annotations["devices"] == List[dict_with_str_bool_int]
+    )
