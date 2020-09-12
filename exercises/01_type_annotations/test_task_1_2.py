@@ -1,6 +1,9 @@
 import pytest
 import task_1_2
 from collections.abc import MutableMapping
+from typing import Dict, Union
+dict_with_str_bool_int = Dict[str, Union[str, bool, int]]
+
 import sys
 
 sys.path.append("..")
@@ -41,6 +44,7 @@ def test_send_show_params():
     assert (
         annotations["device_dict"] == dict_with_str
         or annotations["device_dict"] == dict_with_str_any
+        or annotations["device_dict"] == dict_with_str_bool_int
     )
 
 

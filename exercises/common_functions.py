@@ -3,7 +3,7 @@ import inspect
 from platform import system as system_name
 from subprocess import run, PIPE
 from concurrent.futures import ThreadPoolExecutor
-from typing import Dict, List, Any, Iterator, Tuple
+from typing import Dict, List, Any, Iterator, Tuple, Union
 import re
 import yaml
 
@@ -16,6 +16,7 @@ stdout_incorrect_warning = """
 
 dict_with_str = Dict[str, str]
 dict_with_str_any = Dict[str, Any]
+dict_with_str_bool_int = Dict[str, Union[str, bool, int]]
 list_with_str = List[str]
 list_of_dicts_with_str = List[Dict[str, str]]
 iterator_str = Iterator[str]
