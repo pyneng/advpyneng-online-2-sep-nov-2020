@@ -8,17 +8,21 @@ from netmiko import (
 from typing import Union, Dict, Optional
 
 
-def send_show_command(
-    device_dict: Dict[str, str], command: str, verbose: bool
-) -> Union[str, None]:
+def send_show_command(device_dict: Dict[str, str],
+                      command: str, verbose: bool) -> Union[str, None]:
     try:
         with ConnectHandler(**device_dict) as ssh:
             ssh.enable()
             command_output = ssh.send_command(command)
         return command_output
+
+
+
     except (NetMikoAuthenticationException, NetMikoTimeoutException) as error:
         print(error)
         return None
+
+
 
 
 if __name__ == "__main__":
