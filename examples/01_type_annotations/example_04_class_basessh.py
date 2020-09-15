@@ -31,7 +31,7 @@ class BaseSSH:
     def send_show_command(self, command: str) -> str:
         self._ssh.send(command + "\n")
         time.sleep(2)
-        result = self._ssh.recv(self._MAX_READ).decode("ascii")
+        result: str = self._ssh.recv(self._MAX_READ).decode("ascii")
         return result
 
     def send_config_commands(self, commands: Union[str, Iterable[str]]) -> str:
@@ -40,7 +40,7 @@ class BaseSSH:
         for command in commands:
             self._ssh.send(command + "\n")
             time.sleep(0.5)
-        result = self._ssh.recv(self._MAX_READ).decode("ascii")
+            result: str = self._ssh.recv(self._MAX_READ).decode("ascii")
         return result
 
 
