@@ -1,11 +1,18 @@
 import telnetlib
 import time
+from __future__ import annotations
+from typing import List, Dict, Union, Optional
 
 
 class CiscoTelnet:
     def __init__(
-        self, ip, username, password, enable_password=None, disable_paging=True
-    ):
+        self,
+        ip: str,
+        username: str,
+        password: str,
+        enable_password: Optional[str] = None,
+        disable_paging: bool = True,
+    ) -> None:
         self.ip = ip
         self._telnet = telnetlib.Telnet(ip)
         self._telnet.read_until(b"Username:")
@@ -22,13 +29,13 @@ class CiscoTelnet:
         time.sleep(1)
         self._telnet.read_very_eager()
 
-    def send_show_command(self, command):
+    def send_show_command(self, command: str) -> str:
         self._telnet.write(command.encode("utf-8") + b"\n")
         output = self._telnet.read_until(b"#").decode("utf-8")
         return output
 
-    def send_config_commands(self, commands):
-        if type(commands) == str:
+    def send_config_commands(self, commands: Union[List[str], str]) -> str:
+        if isinstance(commands, str):
             commands = [commands]
         output = ""
         commands = ["conf t", *commands, "end"]
@@ -37,13 +44,13 @@ class CiscoTelnet:
             output += self._telnet.read_until(b"#").decode("utf-8")
         return output
 
-    def close(self):
+    def close(self) -> None:
         self._telnet.close()
 
-    def __enter__(self):
+    def __enter__(self) -> CiscoTelnet:
         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
+    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
         self._telnet.close()
 
 
