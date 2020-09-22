@@ -79,7 +79,7 @@ def update_session_stats(session_stats):
 @click.option("--short_break", "-s", default=5, show_default=True, type=int)
 @click.option("--long_break", "-l", default=30, show_default=True, type=int)
 @click.option("--set_size", "-p", default=4, show_default=True, type=int)
-def pomodoro(pomodoros_to_run, work_minutes, short_break, long_break, set_size):
+def cli(pomodoros_to_run, work_minutes, short_break, long_break, set_size):
     session_stats = {"total": pomodoros_to_run, "done": 0, "todo": pomodoros_to_run}
     global stats
     stats = update_session_stats(session_stats)
@@ -92,4 +92,4 @@ def pomodoro(pomodoros_to_run, work_minutes, short_break, long_break, set_size):
 
 
 if __name__ == "__main__":
-    pomodoro()
+    cli()
