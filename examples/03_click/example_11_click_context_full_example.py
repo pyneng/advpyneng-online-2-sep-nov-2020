@@ -20,9 +20,7 @@ def create(context, db_schema):
     """
     create DB
     """
-    print(
-        "Creating DB {} with DB schema {}".format(context.obj["db_filename"], db_schema)
-    )
+    print("Creating DB {} with DB schema {}".format(context.obj["db_filename"], db_schema))
 
 
 @main.command()
