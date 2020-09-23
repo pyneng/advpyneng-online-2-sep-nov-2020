@@ -158,12 +158,14 @@ def send_show_command(device, command):
 
 
 def send_command_to_devices(devices, threads, show=None, config=None):
-    command = show if show else config
-    function = send_show_command if show else send_cfg_commands
     result_dict = {}
-
     with ThreadPoolExecutor(max_workers=threads) as executor:
-        futures = [executor.submit(function, device, command) for device in devices]
+        futures = []
+        for device in devices:
+            if show:
+                futures.append(executor.submit(send_show_command, device, show))
+            elif config:
+                futures.append(executor.submit(send_cfg_commands, device, config))
         for device, future in zip(devices, futures):
             result_dict[device["host"]] = future.result()
     return result_dict
