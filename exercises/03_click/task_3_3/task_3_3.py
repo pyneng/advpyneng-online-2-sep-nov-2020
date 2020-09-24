@@ -95,10 +95,30 @@ $ python task_3_3.py -y devices.yaml show "sh clock"
 С опцией -p вывод команд парсится с помощью textfsm и выводится:
 
 $ python task_3_3.py -y devices.yaml show "sh ip int br" -p
-[[{'interface': 'Ethernet0/0', 'ip': '192.168.100.1', 'protocol': 'up', 'status': 'up'},
-  {'interface': 'Ethernet0/1', 'ip': '192.168.200.1', 'protocol': 'up', 'status': 'up'},
-  ...
-  {'interface': 'Loopback99', 'ip': '10.0.99.1', 'protocol': 'up', 'status': 'up'}]]
+{'192.168.100.1': [{'interface': 'FastEthernet0/0',
+                    'ip': '192.168.100.1',
+                    'protocol': 'up',
+                    'status': 'up'},
+                   {'interface': 'Loopback99',
+                    'ip': '10.0.99.1',
+                    'protocol': 'up',
+                    'status': 'up'}],
+ '192.168.100.2': [{'interface': 'FastEthernet0/0',
+                    'ip': '192.168.100.2',
+                    'protocol': 'up',
+                    'status': 'up'},
+                   {'interface': 'Loopback99',
+                    'ip': '10.0.99.1',
+                    'protocol': 'up',
+                    'status': 'up'}],
+ '192.168.100.3': [{'interface': 'FastEthernet0/0',
+                    'ip': '192.168.100.3',
+                    'protocol': 'up',
+                    'status': 'up'},
+                   {'interface': 'Loopback99',
+                    'ip': '10.0.99.1',
+                    'protocol': 'up',
+                    'status': 'up'}]}
 
 Опция -o добавляет запись результата в файл (примеры файлов с записью данных выложены в каталоге task_3_3):
 
