@@ -9,6 +9,14 @@ class Topology:
                 normalized_topology[box] = neighbor
         return normalized_topology
 
+    def delete_link(self, from_port, to_port):
+        if self.topology.get(from_port) == to_port:
+            del self.topology[from_port]
+        elif self.topology.get(to_port) == from_port:
+            del self.topology[to_port]
+        else:
+            print("Такого соединения нет")
+
     def __add__(self, other):
         return Topology({**self.topology, **other.topology})
 
