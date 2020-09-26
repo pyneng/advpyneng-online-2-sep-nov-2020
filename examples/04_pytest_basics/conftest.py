@@ -18,6 +18,18 @@ def topology_with_dupl_links():
     }
     return topology
 
+@pytest.fixture()
+def normalized_topology_example():
+    normalized_topology = {
+        ("R1", "Eth0/0"): ("SW1", "Eth0/1"),
+        ("R2", "Eth0/0"): ("SW1", "Eth0/2"),
+        ("R2", "Eth0/1"): ("SW2", "Eth0/11"),
+        ("R3", "Eth0/0"): ("SW1", "Eth0/3"),
+        ("R3", "Eth0/1"): ("R4", "Eth0/0"),
+        ("R3", "Eth0/2"): ("R5", "Eth0/0"),
+    }
+    return normalized_topology
+
 
 @pytest.fixture(scope="session")
 def device_example():
@@ -27,16 +39,19 @@ def device_example():
         "username": "cisco",
         "password": "cisco",
         "secret": "cisco",
-        "fast_cli": True,
     }
     return r1
 
 
+
 @pytest.fixture(scope="session")
-def device_connection(device_example):
-    print("\nОткрываю сессию")
-    r1 = ConnectHandler(**device_example)
-    r1.enable()
-    yield r1
-    print("\nЗакрываю сессию")
-    r1.disconnect()
+def ssh_connection(device_example):
+    # SETUP
+    print(f"\nПодключаемся к {device_example['host']}\n")
+    ssh = ConnectHandler(**device_example)
+    ssh.enable()
+    yield ssh
+    # TEARDOWN
+    ssh.disconnect()
+    print(f"\nЗакрыли сессию {device_example['host']}\n")
+
