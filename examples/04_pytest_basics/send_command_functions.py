@@ -1,5 +1,7 @@
 from netmiko import ConnectHandler
 import re
+from concurrent.futures import ThreadPoolExecutor
+from itertools import repeat
 
 
 def send_show_command(device, command):
@@ -7,6 +9,16 @@ def send_show_command(device, command):
         ssh.enable()
         result = ssh.send_command(command)
     return result
+
+
+def send_show_to_devices(device_list, command, output_file):
+    with ThreadPoolExecutor(workers=5) as ex:
+        result = ex.map(
+            send_show_command, device_list, repeat(command)
+        )
+        with open(output_file, "w") as f:
+            for output in result:
+                f.write(output)
 
 
 def send_config_commands(device, config_commands):

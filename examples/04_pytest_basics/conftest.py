@@ -3,6 +3,12 @@ import pytest
 from netmiko import ConnectHandler
 
 
+@pytest.fixture(scope="session")
+def templates(tmpdir_factory):
+    pass
+
+
+
 @pytest.fixture()
 def topology_with_dupl_links():
     topology = {
@@ -55,3 +61,13 @@ def ssh_connection(device_example):
     ssh.disconnect()
     print(f"\nЗакрыли сессию {device_example['host']}\n")
 
+
+def pytest_addoption(parser):
+    parser.addoption(
+        "--ip-list", nargs='+', help="IP list"
+    )
+
+
+@pytest.fixture
+def ip_list(request):
+    return request.config.getoption("--ip-list")

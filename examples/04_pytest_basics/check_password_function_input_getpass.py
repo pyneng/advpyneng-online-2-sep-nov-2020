@@ -1,7 +1,9 @@
+import getpass
+
 
 def check_passwd(min_length=8, check_username=True):
     username = input("Username: ")
-    password = input("Password: ")
+    password = getpass.getpass("Password: ")
     print(username, password)
     if len(password) < min_length:
         print("Пароль слишком короткий")
