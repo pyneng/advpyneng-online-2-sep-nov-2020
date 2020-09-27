@@ -17,7 +17,7 @@ def one_device_params(request):
     return request.param
 
 
-@pytest.fixture(params=all_devices, scope="session")
+@pytest.fixture(params=all_devices, ids=all_hosts, scope="session")
 def connect_all(request):
     ssh = ConnectHandler(**request.param)
     ssh.enable()
