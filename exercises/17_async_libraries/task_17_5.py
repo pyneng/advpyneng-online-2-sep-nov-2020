@@ -19,7 +19,43 @@
 * device - словарь с параметрами подключения к устройству
 * config_commands - список команд или одна команда (строка), которые надо выполнить
 
-Функция возвращает строку с результатами выполнения команды.
+Функция возвращает строку с результатами выполнения команды. Пример вызова функции:
+
+conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R1(config)#sh clock
+*07:54:15.113 UTC Wed Sep 30 2020
+R1(config)#
+
+
+In [7]: asyncio.run(configure_router(devices[0], 'sh clock'))
+Out[7]: 'conf t\nEnter configuration commands, one per line.  End with CNTL/Z.\nR1(config)#sh clock\n*07:55:25.233 UTC Wed Sep 30 2020\nR1(config)#'
+
+In [8]: print(asyncio.run(configure_router(devices[0], 'sh clock')))
+conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R1(config)#sh clock
+*07:55:35.427 UTC Wed Sep 30 2020
+R1(config)#
+
+In [9]: print(asyncio.run(configure_router(devices[0], 'sh ip int br')))
+conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R1(config)#sh ip int br
+Interface                  IP-Address      OK? Method Status                Protocol
+Ethernet0/0                192.168.100.1   YES NVRAM  up                    up
+Ethernet0/1                192.168.200.1   YES NVRAM  up                    up
+Ethernet0/2                unassigned      YES NVRAM  up                    up
+Ethernet0/3                192.168.130.1   YES NVRAM  up                    up
+Loopback22                 10.2.2.2        YES NVRAM  up                    up
+Loopback33                 unassigned      YES unset  up                    up
+Loopback55                 5.5.5.5         YES manual up                    up
+Loopback99                 10.0.99.1       YES manual up                    up
+Loopback100                10.1.1.100      YES manual up                    up
+R1(config)#
+
+
+
 
 Примеры команд с ошибками:
 R1(config)#logging 0255.255.1
