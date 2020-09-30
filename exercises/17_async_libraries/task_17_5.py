@@ -21,13 +21,6 @@
 
 Функция возвращает строку с результатами выполнения команды. Пример вызова функции:
 
-conf t
-Enter configuration commands, one per line.  End with CNTL/Z.
-R1(config)#sh clock
-*07:54:15.113 UTC Wed Sep 30 2020
-R1(config)#
-
-
 In [7]: asyncio.run(configure_router(devices[0], 'sh clock'))
 Out[7]: 'conf t\nEnter configuration commands, one per line.  End with CNTL/Z.\nR1(config)#sh clock\n*07:55:25.233 UTC Wed Sep 30 2020\nR1(config)#'
 
@@ -38,22 +31,14 @@ R1(config)#sh clock
 *07:55:35.427 UTC Wed Sep 30 2020
 R1(config)#
 
-In [9]: print(asyncio.run(configure_router(devices[0], 'sh ip int br')))
-conf t
-Enter configuration commands, one per line.  End with CNTL/Z.
-R1(config)#sh ip int br
-Interface                  IP-Address      OK? Method Status                Protocol
-Ethernet0/0                192.168.100.1   YES NVRAM  up                    up
-Ethernet0/1                192.168.200.1   YES NVRAM  up                    up
-Ethernet0/2                unassigned      YES NVRAM  up                    up
-Ethernet0/3                192.168.130.1   YES NVRAM  up                    up
-Loopback22                 10.2.2.2        YES NVRAM  up                    up
-Loopback33                 unassigned      YES unset  up                    up
-Loopback55                 5.5.5.5         YES manual up                    up
-Loopback99                 10.0.99.1       YES manual up                    up
-Loopback100                10.1.1.100      YES manual up                    up
-R1(config)#
 
+In [9]: asyncio.run(configure_router(devices[0], 'shclock'))
+---------------------------------------------------------------------------
+ValueError                                Traceback (most recent call last)
+<ipython-input-9-bc449d292363> in <module>
+----> 1 asyncio.run(configure_router(devices[0], 'shclock'))
+...
+ValueError: Команда "shclock" выполнилась с ошибкой "Invalid input detected at '^' marker." на устройстве 192.168.100.1
 
 
 
@@ -80,3 +65,41 @@ R1(config)#a
 # списки команд с ошибками и без:
 commands_with_errors = ["logging 0255.255.1", "logging", "a"]
 correct_commands = ["logging buffered 20010", "ip http server"]
+
+import asyncio
+import netdev
+import yaml
+import re
+
+
+# списки команд с ошибками и без:
+commands_with_errors = ['logging 0255.255.1', 'logging', 'a']
+correct_commands = ['logging buffered 20010', 'sh clock', 'ip http server']
+
+
+async def configure_router(device, config_commands):
+    if isinstance(config_commands, str):
+        config_commands = [config_commands]
+    regex = '% (?P<err>.+)'
+    template = 'Команда "{cmd}" выполнилась с ошибкой "{error}" на устройстве {host}'
+    output = ''
+    async with netdev.create(**device) as ssh:
+        for command in config_commands:
+            result = await ssh.send_config_set([command], exit_config_mode=False)
+            error_in_cmd = re.search(regex, result)
+            if error_in_cmd:
+                message = template.format(cmd=command, host=device['host'],
+                                          error=error_in_cmd.group('err'))
+                raise ValueError(message)
+            output += result
+    return output
+
+
+
+if __name__ == '__main__':
+    with open('devices_netmiko.yaml') as f:
+        devices = yaml.safe_load(f)
+    #print(asyncio.run(configure_router(devices[0], correct_commands + commands_with_errors)))
+    #asyncio.run(configure_router(devices[0], correct_commands))
+    print(asyncio.run(configure_router(devices[0], 'sh clock')))
+
