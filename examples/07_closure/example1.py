@@ -1,8 +1,7 @@
-def multiply(num1):
-    print("Вызываю multiply")
-    list_var = [1, 2, 3]
-    string = "test"
-    def inner(num2):
-        print("Вызываю inner")
+from typing import Callable
+
+
+def multiply(num1: int) -> Callable[[int], int]:
+    def inner(num2: int) -> int:
         return num1 * num2
     return inner
