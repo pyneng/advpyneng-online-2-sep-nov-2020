@@ -1,3 +1,5 @@
+# source https://github.com/python/mypy/issues/2087#issuecomment-587741762
+
 from typing import Protocol, TypeVar, Callable, Optional, cast
 
 F = TypeVar("F", bound=Callable[..., object])
