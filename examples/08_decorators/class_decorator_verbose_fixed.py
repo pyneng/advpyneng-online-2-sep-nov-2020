@@ -20,7 +20,7 @@ def verbose(func):
 
 def verbose_methods(cls):
     for name, value in vars(cls).items():
-        if callable(value):
+        if not name.startswith("__") and callable(value):
             setattr(cls, name, verbose(value))
     return cls
 
