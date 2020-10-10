@@ -14,21 +14,21 @@ def send_commands(command, device):
 # send_commands = singledispatch(send_commands)
 
 
-@send_commands.register(str)
-def _(show_command, device):
-    print("Аргумент строка")
+@send_commands.register
+def _(command: str, device):
+    print("str")
     with ConnectHandler(**device) as ssh:
         ssh.enable()
-        result = ssh.send_command(show_command)
+        result = ssh.send_command(command)
     return result
 
 
-@send_commands.register(list)
-def _(config_commands, device):
-    print("Аргумент list")
+@send_commands.register
+def _(command: Iterable, device):
+    print("iterable")
     with ConnectHandler(**device) as ssh:
         ssh.enable()
-        result = ssh.send_config_set(config_commands)
+        result = ssh.send_config_set(command)
     return result
 
 

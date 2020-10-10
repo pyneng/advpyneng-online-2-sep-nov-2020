@@ -4,6 +4,7 @@ from pprint import pprint
 
 
 def send_show_command(device, show_command):
+    print("show")
     with ConnectHandler(**device) as ssh:
         ssh.enable()
         result = ssh.send_command(show_command)
@@ -11,17 +12,18 @@ def send_show_command(device, show_command):
 
 
 def send_config_commands(device, config_commands):
+    print("config")
     with ConnectHandler(**device) as ssh:
         ssh.enable()
         result = ssh.send_config_set(config_commands)
     return result
 
 
-def send_commands(device, config=None, show=None):
-    if show:
-        return send_show_command(device_list, show)
-    elif config:
-        return send_config_commands(device_list, config)
+def send_commands(device, command):
+    if type(command) == str:
+        return send_show_command(device, command)
+    elif type(command) == list:
+        return send_config_commands(device, command)
 
 
 if __name__ == "__main__":
@@ -30,5 +32,5 @@ if __name__ == "__main__":
     with open("devices.yaml") as f:
         dev_list = yaml.safe_load(f)
 
-    send_commands(dev_list, config=commands)
-    send_commands(dev_list, show=show_command)
+    send_commands(dev_list[0], commands)
+    send_commands(dev_list[0], show_command)
