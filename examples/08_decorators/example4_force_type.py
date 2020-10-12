@@ -1,6 +1,16 @@
 from functools import wraps
 
 
+def all_numbers(func):
+    print("Вызываю декоратор")
+    @wraps(func)
+    def inner(*args):
+        if not all([isinstance(arg, int) for arg in args]):
+            raise ValueError(f"Все аргументы должны быть int")
+        return func(*args)
+    return inner
+
+
 def force_arg_type(required_type):
     print("Вызываю force_arg_type")
     def decorator(func):
