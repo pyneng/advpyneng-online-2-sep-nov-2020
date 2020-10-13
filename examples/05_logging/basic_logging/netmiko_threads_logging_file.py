@@ -4,32 +4,33 @@ from datetime import datetime
 import time
 from itertools import repeat
 import logging
+import click
 
 import yaml
 from netmiko import ConnectHandler, NetMikoAuthenticationException
 
-
+logging.getLogger("netmiko").setLevel(logging.INFO)
 logging.getLogger("paramiko").setLevel(logging.WARNING)
 
 logging.basicConfig(
-    filename="ssh_connections.log",
-    format="%(threadName)s %(name)s %(levelname)s: %(message)s",
-    level=logging.INFO,
+    format="%(threadName)s %(name)s - %(levelname)s: %(message)s",
+    level=logging.DEBUG
 )
 
 
 def send_show(device_dict, command):
     ip = device_dict["host"]
-    logging.info(f"===> {datetime.now().time()} Connection: {ip}")
+    logging.info(f"===>  Connection: {ip}")
 
     with ConnectHandler(**device_dict) as ssh:
         ssh.enable()
         result = ssh.send_command(command)
-        logging.info(f"<=== {datetime.now().time()} Received:   {ip}")
+        logging.debug(f"<===  Received:   {ip}")
     return result
 
 
 def send_command_to_devices(devices, command):
+    logging.debug(click.style("START", fg="green"))
     data = {}
     with ThreadPoolExecutor(max_workers=2) as executor:
         result = executor.map(send_show, devices, repeat(command))
@@ -41,4 +42,4 @@ def send_command_to_devices(devices, command):
 if __name__ == "__main__":
     with open("devices.yaml") as f:
         devices = yaml.safe_load(f)
-    pprint(send_command_to_devices(devices, "sh ip int br"), width=120)
+    send_command_to_devices(devices, "sh ip int br")

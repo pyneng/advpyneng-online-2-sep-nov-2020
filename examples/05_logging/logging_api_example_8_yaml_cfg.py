@@ -9,7 +9,7 @@ logger = logging.getLogger("superscript")
 
 # read config
 with open(CFG_PATH + "log_config.yml") as f:
-    log_config = yaml.load(f)
+    log_config = yaml.safe_load(f)
 
 logging.config.dictConfig(log_config)
 

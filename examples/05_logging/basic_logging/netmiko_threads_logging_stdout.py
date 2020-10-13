@@ -11,18 +11,19 @@ from netmiko import ConnectHandler, NetMikoAuthenticationException
 logging.getLogger("paramiko").setLevel(logging.WARNING)
 
 logging.basicConfig(
-    format="%(threadName)s %(name)s %(levelname)s: %(message)s", level=logging.INFO
+    format="%(threadName)s %(name)s %(levelname)s %(asctime)s: %(message)s", datefmt="%H:%M:%S",
+    level=logging.INFO
 )
 
 
 def send_show(device_dict, command):
     ip = device_dict["host"]
-    logging.info(f"===> {datetime.now().time()} Connection: {ip}")
+    logging.info(f"===> Connection: {ip}")
 
     with ConnectHandler(**device_dict) as ssh:
         ssh.enable()
         result = ssh.send_command(command)
-        logging.info(f"<=== {datetime.now().time()} Received:   {ip}")
+        logging.info(f"<=== Received:   {ip}")
     return result
 
 

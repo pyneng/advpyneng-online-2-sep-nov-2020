@@ -1,5 +1,6 @@
 import logging
 import logging.handlers
+import time
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -17,5 +18,7 @@ logger.addHandler(logfile)
 
 ## messages
 logger.debug("Сообщение уровня debug")
+time.sleep(2)
 logger.info("Сообщение уровня info")
+time.sleep(2)
 logger.warning("Сообщение уровня warning")
