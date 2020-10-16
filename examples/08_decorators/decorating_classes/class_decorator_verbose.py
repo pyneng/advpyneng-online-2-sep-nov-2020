@@ -1,28 +1,24 @@
 import paramiko
 import time
-from functools import wraps
 
 
 def verbose(func):
-    print("Декорируем функцию")
-
-    @wraps(func)
     def inner(*args, **kwargs):
-        print(f"Вызываю функцию {func.__name__}, " f"args {args}, kwargs {kwargs} ")
+        print(f"Вызываю функцию {func.__name__}")
+        print("Аргументы", args, kwargs)
         return func(*args, **kwargs)
-
     return inner
 
 
 def verbose_methods(cls):
-    for name, value in vars(cls).items():
-        if callable(value) and name not in ("__repr__", "__str__"):
-            setattr(cls, name, verbose(value))
+    for attr, value in vars(cls).items():
+        if not attr.startswith("__") and callable(value):
+            setattr(cls, attr, verbose(value))
     return cls
 
 
-@verbose_methods
 class BaseSSH:
+    device_type = "cisco_ios"
     def __init__(self, ip, username, password):
         self.ip = ip
         self.username = username
@@ -50,6 +46,7 @@ class BaseSSH:
         result = self._ssh.recv(self._MAX_READ).decode("ascii")
         return result
 
+    @verbose
     def send_config_commands(self, commands):
         if isinstance(commands, str):
             commands = [commands]
@@ -69,9 +66,6 @@ class BaseSSH:
         self._ssh.close()
 
     def __repr__(self):
-        return "BaseSSH(ip={self.ip})"
+        return f"BaseSSH(ip={self.ip})"
 
 
-if __name__ == "__main__":
-    r1 = BaseSSH("192.168.100.1", "cisco", "cisco")
-    r1.send_show_command(command="sh clock")
