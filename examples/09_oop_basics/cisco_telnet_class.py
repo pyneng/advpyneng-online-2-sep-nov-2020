@@ -12,6 +12,7 @@ class CiscoTelnet:
     def __init__(
         self, ip, username, password, enable_password=None, disable_paging=True
     ):
+        print("__init__")
         log.debug(f"Telnet подключение к {ip}")
         self.ip = ip
         self._telnet = telnetlib.Telnet(ip)
@@ -50,17 +51,15 @@ class CiscoTelnet:
         self._telnet.close()
 
     def __enter__(self):
+        print("__enter__")
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
+        print("__exit__")
         self._telnet.close()
 
 
 if __name__ == "__main__":
     with CiscoTelnet("192.168.100.1", "cisco", "cisco", "cisco") as r1:
-        print(r1.send_show_command("sh ip int br"))
-        print(
-            r1.send_config_commands(
-                ["int lo55", "ip address 10.5.5.55 255.255.255.255"]
-            )
-        )
+        print(r1.send_show_command("sh clock"))
+        raise IndexError
