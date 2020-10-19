@@ -34,6 +34,6 @@ def test_timecode(capsys):
     correct_stdout = "Функция выполнялась"
     out, err = capsys.readouterr()
     seconds = float(out.strip().split(":")[-1])
-    assert out != "", "Сообщение об ошибке не выведено на stdout"
-    assert correct_stdout in out, "Выведено неправильное сообщение об ошибке"
+    assert out != "", "Сообщение о времени выполнения не выведено на stdout"
+    assert correct_stdout in out, "Выведено неправильное сообщение"
     assert 1 < seconds < 4
