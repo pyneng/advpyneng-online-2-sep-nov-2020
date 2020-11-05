@@ -1,3 +1,7 @@
+# wget https://github.com/intrig-unicamp/ALTO-as-a-Service/raw/master/IXP-PTT-BR/20141208/PTTMetro-LG-Dataset/IPv4/processed/rib.table.lg.ba.ptt.br-BGP.csv.gz
+# gunzip rib.table.lg.ba.ptt.br-BGP.csv.gz
+
+
 """
 "status","network","netmask","nexthop","metric","locprf","weight","path","origin"
 "*","1.0.0.0","24","200.219.145.45",NA,NA,0,"28135 18881 3549 15169","i"
