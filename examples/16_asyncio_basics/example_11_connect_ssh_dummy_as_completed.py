@@ -23,8 +23,8 @@ async def main():
     ip_list = ["10.1.1.1", "10.1.1.2", "10.1.1.3", "10.1.1.4"]
     coroutines = [connect_ssh(ip, "sh clock") for ip in ip_list]
     tasks = []
-    for future in asyncio.as_completed(coroutines):
-        result = await future
+    for coro in asyncio.as_completed(coroutines):
+        result = await coro
         tasks.append(asyncio.create_task(write_to_file(f"{result[0]}.txt", result)))
     await asyncio.gather(*tasks)
 

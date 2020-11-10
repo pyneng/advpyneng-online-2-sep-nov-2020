@@ -36,8 +36,8 @@ async def main():
     start_time = datetime.now()
     print(f"Start main")
     coroutines = [cook_potatoes(15), cook_carrots(10), cook_eggs(5)]
-    for future in asyncio.as_completed(coroutines):
-        done = await future
+    for coro in asyncio.as_completed(coroutines):
+        done = await coro
         result = await cutting(2)
     print(f"Total {datetime.now() - start_time}")
     print(f"{result=}")
