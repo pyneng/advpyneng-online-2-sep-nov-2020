@@ -13,12 +13,12 @@ async def connect_ssh(ip, command, username="cisco", password="cisco"):
         password=password,
         encryption_algs="+aes128-cbc,aes256-cbc",
     ) as ssh:
-        process = await ssh.create_process()
-        print(f"Отправляю команду {command} на устройство {ip}")
-        output = await process.stdout.readuntil(">")
-        process.stdin.write(command + "\n")
-        output = await process.stdout.readuntil(">")
-    return output
+        async with await ssh.create_process() as process:
+            print(f"Отправляю команду {command} на устройство {ip}")
+            output = await process.stdout.readuntil(">")
+            process.stdin.write(command + "\n")
+            output = await process.stdout.readuntil(">")
+            return output
 
 
 async def send_command_to_devices(ip_list, command):
