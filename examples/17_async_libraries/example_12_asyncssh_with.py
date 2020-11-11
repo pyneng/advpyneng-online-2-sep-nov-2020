@@ -7,7 +7,14 @@ import asyncssh
 
 async def connect_ssh(ip, command, username="cisco", password="cisco"):
     print(f"Подключаюсь к {ip}")
-    async with asyncssh.connect(ip, username=username, password=password) as ssh:
+    #if ip == "192.168.100.1": password = "cisco123"
+    async with asyncssh.connect(
+        ip,
+        username=username,
+        password=password,
+        encryption_algs="+aes128-cbc,aes256-cbc",
+        # login_timeout=5
+    ) as ssh:
         writer, reader, stderr = await ssh.open_session(
             term_type="Dumb", term_size=(200, 24)
         )

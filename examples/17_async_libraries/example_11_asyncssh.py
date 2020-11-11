@@ -7,7 +7,15 @@ import asyncssh
 
 async def connect_ssh(ip, command, username="cisco", password="cisco"):
     print(f"Подключаюсь к {ip}")
-    ssh_coroutine = asyncssh.connect(ip, username=username, password=password)
+    # asyncssh.misc.KeyExchangeFailed: No matching encryption algorithm found,
+    # sent aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
+    # and received aes128-cbc,3des-cbc,aes192-cbc,aes256-cbc
+    ssh_coroutine = asyncssh.connect(
+        ip,
+        username=username,
+        password=password,
+        encryption_algs="+aes128-cbc,aes256-cbc",
+    )
     # так как нет встроенного таймаута, запускаем через wait_for
     ssh = await asyncio.wait_for(ssh_coroutine, timeout=10)
     writer, reader, stderr = await ssh.open_session(
@@ -35,7 +43,7 @@ async def send_command_to_devices(ip_list, command):
 
 
 if __name__ == "__main__":
-    # ip_list = ['192.168.100.1', '192.168.100.2', '192.168.100.3']
-    ip_list = ["192.168.100.1"]
-    result = asyncio.run(send_command_to_devices(ip_list, "sh run"))
+    ip_list = ["192.168.100.1", "192.168.100.2", "192.168.100.3"]
+    # ip_list = ["192.168.100.1"]
+    result = asyncio.run(send_command_to_devices(ip_list, "sh ip int br"))
     pprint(result, width=120)
