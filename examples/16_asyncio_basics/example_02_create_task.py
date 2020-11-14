@@ -14,7 +14,8 @@ async def main():
     print(f"Start main")
     task1 = asyncio.create_task(delay_message(4, "message1"))
     task2 = asyncio.create_task(delay_message(2, "message2"))
-
+    print("Running...")
+    # await asyncio.sleep(2)
     await task1
     await task2
     print(f"Total {datetime.now() - start_time}")
