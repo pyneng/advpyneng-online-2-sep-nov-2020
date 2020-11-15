@@ -1,12 +1,9 @@
 - host: 192.168.100.1
   username: cisco
   password: cisco
-  encryption_algs: "+aes128-cbc,aes256-cbc"
 - host: 192.168.100.2
   username: cisco
   password: cisco
-  encryption_algs: "+aes128-cbc,aes256-cbc"
 - host: 192.168.100.3
   username: cisco
   password: cisco
-  encryption_algs: "+aes128-cbc,aes256-cbc"

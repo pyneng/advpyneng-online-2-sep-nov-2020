@@ -53,9 +53,10 @@ def send_command_to_devices(devices, command):
 
 
 if __name__ == "__main__":
-    with open("devices.yaml") as f:
+    with open("devices_long.yaml") as f:
         devices = yaml.safe_load(f)
     result = send_command_to_devices(devices, "sh run")
+    print(len(result))
     # pprint(list(map(len, result)))
     # with open('testfile_sh_run_all_paramiko.txt', 'w') as f:
     #    f.write(result[0])

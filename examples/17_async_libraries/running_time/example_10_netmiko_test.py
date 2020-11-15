@@ -24,6 +24,7 @@ if __name__ == "__main__":
     with open("devices_netmiko.yaml") as f:
         devices = yaml.safe_load(f)
     result = send_command_to_devices(devices, "sh run")
+    print(len(result))
     # pprint(list(map(len, result)))
     # with open('testfile_sh_run_all_netmiko.txt', 'w') as f:
     #    f.write(result[0])
